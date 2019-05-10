@@ -21,7 +21,7 @@ weatherForm.addEventListener('submit', (e) => {
 	htmlLocation.textContent = '';
 	htmlForecast.textContent = '';
 
-	fetch('http://alexisplayground.com:1234/weather?adress=' + serchInput).then( (response) => {
+	fetch('/weather?adress=' + serchInput).then( (response) => {
 		
 		response.json().then( (data) => {
 				

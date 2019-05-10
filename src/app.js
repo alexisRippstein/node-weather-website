@@ -11,10 +11,9 @@ const request = require('request')
 const geocode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
 
-console.log(__dirname)
-console.log(path.join(__dirname, '../public'))
-
+// Express
 const app = express()
+const port = process.env.PORT || 3000
 
 // Define paths for Express config
 const publicDirPath = path.join(__dirname, '../public')
@@ -107,8 +106,6 @@ app.get('/*', (req, res) => {
 	})
 })
 
-app.listen(1234, () => {
-	console.log('Server is up on port 4000.')
-	//process.on('uncaughtException', '')
-	//process.on('SIGTERM', '')
+app.listen(port, () => {
+	console.log('Server is up on port: ' + port)
 })
