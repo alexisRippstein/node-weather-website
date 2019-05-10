@@ -8,9 +8,10 @@ h1, h2, h3, h4, h5, h6, p, form {
 body {
   padding-top: 5rem;
 }
-.starter-template {
-  padding: 3rem 1.5rem;
-  text-align: center;
+
+.img-responsive {
+  width: 100%;
+  height: auto;
 }
 
 
@@ -57,12 +58,13 @@ main.container {
   padding-left: 15px;
 }
 
-/* MENÜ
+/* Header
 -------------------------------------------------- */
 .navbar-dark .navbar-brand {
     color: #fff;
     text-align: center;
     line-height: 16px;
+    transition: 0.5s color;
 }
 
 .navbar-dark .navbar-brand:hover {
@@ -73,18 +75,36 @@ main.container {
     color: grey;
     font-size: 12px;
     font-weight: 100;
+    display: block;
+    margin-top: 5px;
 }
 
+.navbarLogo {
+  display: inline-block;
+  margin-right: 8px;
+  float: left;
+  -webkit-filter: grayscale(0);
+   filter: grayscale(0);
+   transition: 0.2s filter;
+}
+
+.navbar-brand:hover .navbarLogo {
+  -webkit-filter: grayscale(100%);
+   filter: grayscale(100%);
+}
 
 /* ABOUT
 __________________________________________________ */
+figure.aboutImg {
+  width: 200px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
 
 @media (min-width: 576px) {
-
   figure.aboutImg {
-    width: 250px;
+    width: 180px;
     float: left;
-    width: 250px;
   }
 }
 
@@ -95,10 +115,25 @@ figcaption {
 
 @media (min-width: 576px) {
   .about .lead {
-    padding-top: 78px;
+    padding-top: 40px;
     text-align: left;
-    margin-left: 280px;
+    margin-left: 200px;
   }
+}
+
+@media (min-width: 768px) {
+  .about .lead {
+    padding-top: 60px;
+  }
+}
+
+.starter-template {
+  text-align: center;
+}
+
+.about.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
 }
 
 @media (min-width: 992px) {
