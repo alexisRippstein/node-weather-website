@@ -5,10 +5,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 	color:grey;
 }
 
-img {
-	width: 250px;
-}
-
 body {
   padding-top: 5rem;
 }
@@ -80,13 +76,45 @@ main.container {
 }
 
 
+/* ABOUT
+__________________________________________________ */
+
+@media (min-width: 576px) {
+
+  figure.aboutImg {
+    width: 250px;
+    float: left;
+    width: 250px;
+  }
+}
+
+figcaption {
+    margin-top: 10px;
+    color:grey;
+}
+
+@media (min-width: 576px) {
+  .about .lead {
+    padding-top: 78px;
+    text-align: left;
+    margin-left: 280px;
+  }
+}
+
+@media (min-width: 992px) {
+  .about.starter-template {
+    padding: 3rem 11.5rem
+  }
+}
+
+
 /* Wheater Results 
 -------------------------------------------------- */
 #location {
   margin-bottom: 1.5rem;
 }
 
-/* spinner */
+/* Loading spinner */
 
 div#spinner {
     position: absolute;
@@ -97,6 +125,12 @@ div#spinner::before {
   content: '';
   background: green;
   width: 100%;
+}
+
+.weather-icon {
+  display: inline-block;
+  margin-right: 10px;
+  margin-top: -15px;
 }
 
 
