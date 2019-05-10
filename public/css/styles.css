@@ -128,9 +128,36 @@ div#spinner::before {
 }
 
 .weather-icon {
-  display: inline-block;
-  margin-right: 10px;
-  margin-top: -15px;
+  display: block;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {  
+  .weather-icon {
+    display: inline-block;
+    margin-right: 10px;
+    margin-top: -15px;
+  }
+}
+
+#location {
+    font-weight: 300;
+}
+
+@media (min-width: 992px) {
+  #location {
+      font-size: 3.5rem;
+      font-weight: 300;
+      line-height: 1.2;
+  }
+}
+
+#forecast {
+  font-weight: 300;
+}
+
+#inputLocation {
+  text-align: center;
 }
 
 
