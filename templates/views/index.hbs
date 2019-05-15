@@ -1,43 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
-	{{>globalHead}}
+{{>globalHead}}
 
-	<body class="d-flex flex-column h-100">
-		{{>header}}
-		<main role="main" class="flex-shrink-0">
-			<div class="container">
-				<div class="starter-template">
-					<h1><img class="weather-icon" src="/img/favicons/android-chrome-48x48.png">{{title}}</h1>
-					<p class="lead">Use this Site to check weather conditions for your location!<br>Just enter your location down below.</p>
-					<form id="weatherForm" class="">
-						<div class="form-row">
-							<div class="form-group mb-2 col-sm-8 col-md-3 offset-md-3">
-								<label for="inputLocation" class="sr-only">Location</label>
-								<input type="text" name="adress" class="form-control" id="inputLocation" placeholder="Location">
-							</div>
-							<button type="submit" class="btn btn-primary col-sm-4 col-md-2 mb-2">Search</button>
+<body class="d-flex flex-column h-100">
+	{{>header}}
+	<main role="main" class="flex-shrink-0">
+		<div class="container">
+			<div class="starter-template">
+				<h1><img class="weather-icon" src="/img/favicons/android-chrome-48x48.png">{{title}}</h1>
+				<p class="lead">Use this Site to check weather conditions for your location!<br>Just enter your location down below.</p>
+				<form id="weatherForm" class="">
+					<div class="form-row">
+						<div class="form-group mb-2 col-sm-8 col-md-3 offset-md-3">
+							<label for="inputLocation" class="sr-only">Location</label>
+							<input type="text" name="adress" class="form-control" id="inputLocation" placeholder="Location">
 						</div>
-					</form>
-					<div id="weatherMsg" class="d-block">
-						<h3 id="location"></h3>
-						<h5 id="forecast"></h5>
+						<button type="submit" class="btn btn-primary col-sm-4 col-md-2 mb-2">Search</button>
 					</div>
-
-					<div id="errorMsg" class="s" role="alert"></div>
-
-					<div id="spinner" class="spinner-border d-none" role="status">
-					  <span class="sr-only">Loading...</span>
-					</div>
-					
+				</form>
+				<div id="weatherMsg" class="d-none m-auto">
+					<h3 id="location"></h3>
+					<figure id="weatherIconFigure" class="float-left">
+					</figure>
+					<ul id="forecastList">
+					</ul>
 				</div>
-			</div><!-- /.container -->
-		</main><!-- /.main -->
-		{{>globalFooter}}
-		<!-- Body Styles -->
-		{{>globalBodyStyles}}
-		<!-- Body Scripts -->
-		{{>globalBodyScripts}}
-		<!-- local Page Scripts -->
-		<script src="/js/app.js"></script>
-	</body>
+				<div id="errorMsg" class="s" role="alert"></div>
+				<div id="spinner" class="spinner-border d-none" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+		</div><!-- /.container -->
+	</main><!-- /.main -->
+	{{>globalFooter}}
+	<!-- Body Styles -->
+	{{>globalBodyStyles}}
+	<!-- Body Scripts -->
+	{{>globalBodyScripts}}
+	<!-- local Page Scripts -->
+	<script src="/js/app.js"></script>
+</body>
+
 </html>

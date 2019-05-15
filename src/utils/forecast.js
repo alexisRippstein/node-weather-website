@@ -15,8 +15,9 @@ const forecast = (body, callback) => {
         	const { temperature, precipProbability } = body.currently
         	const dailySummary = body.daily.data[0].summary
             const { temperatureHigh, temperatureLow } = body.daily.data[0]
+            const { icon } = body.daily.data[0]
 
-            callback(undefined, dailySummary + ' – The highest temperatures today are ' + temperatureHigh + ' °C. – It is currently ' + temperature + ' °C out. – There is a ' + precipProbability + '% chance of precipitation. – The lowest temperature will be at ' + temperatureLow + ' °C!')
+            callback(undefined, icon + ' – ' + dailySummary + ' – The highest temperatures today are ' + temperatureHigh + ' °C. – It is currently ' + temperature + ' °C out. – There is a ' + precipProbability + '% chance of precipitation. – The lowest temperature will be at ' + temperatureLow + ' °C!')
         }
     })
 }

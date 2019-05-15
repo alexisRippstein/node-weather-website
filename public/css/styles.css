@@ -162,6 +162,29 @@ div#spinner::before {
   width: 100%;
 }
 
+#weatherMsg {
+  background: #c0392a;
+  padding: 20px;
+  color: #fff;
+  border-radius: 1em;
+}
+#weatherIconFigure {
+  display: block;
+  width: 130px;
+}
+
+.weather-icon-result {
+  width: 100%;
+  display: block;
+  background: #f7f2f2;
+  border-radius: 50%;
+}
+
+figcaption{
+  margin: 0;
+  color: #fff;
+}
+
 .weather-icon {
   display: block;
   margin: 0 auto;
@@ -177,18 +200,28 @@ div#spinner::before {
 
 #location {
     font-weight: 300;
+    color: #fff;
 }
+
 
 @media (min-width: 992px) {
   #location {
-      font-size: 3.5rem;
+      font-size: 3rem;
       font-weight: 300;
-      line-height: 1.2;
   }
 }
 
-#forecast {
+#forecastList {
   font-weight: 300;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+
+  #forecastList {
+    padding-top: 15px;
+    margin-left: 130px
+  }
 }
 
 #inputLocation {
