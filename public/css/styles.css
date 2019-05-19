@@ -131,13 +131,13 @@ figcaption {
   text-align: center;
 }
 
-.about.starter-template {
+.starter-template {
   padding: 3rem 1.5rem;
   text-align: center;
 }
 
 @media (min-width: 992px) {
-  .about.starter-template {
+  .starter-template {
     padding: 3rem 11.5rem
   }
 }
@@ -167,10 +167,23 @@ div#spinner::before {
   padding: 20px;
   color: #fff;
   border-radius: 1em;
+  box-shadow: 8px 8px 20px #3339;
+  margin-bottom: 80px !important;
 }
 #weatherIconFigure {
   display: block;
   width: 130px;
+  display: block;
+  margin: 0 auto;
+  float: none;
+  margin-bottom: 50px;
+}
+
+@media (min-width: 768px) {
+  #weatherIconFigure {
+    margin: 0;
+    float: left;
+  }
 }
 
 .weather-icon-result {
@@ -178,11 +191,13 @@ div#spinner::before {
   display: block;
   background: #f7f2f2;
   border-radius: 50%;
+  margin-bottom: 22px;
 }
 
 figcaption{
   margin: 0;
   color: #fff;
+  font-size: 15px;
 }
 
 .weather-icon {
@@ -211,14 +226,32 @@ figcaption{
   }
 }
 
-#forecastList {
+ul#forecastList li {
+  position: relative;
+  padding-bottom: 10px;
+}
+
+ul#forecastList {
+  list-style: none;
   font-weight: 300;
   text-align: left;
 }
 
+ul#forecastList li:before{
+   content: '';
+   position: absolute;
+   border-right:1px solid #fff;
+   border-bottom:1px solid #fff;
+   width:10px;
+   height:10px;
+   top: calc(50% - 4px);
+   left: -20px;
+   transform: translateY(-50%) rotate(-45deg);
+}
+
 @media (min-width: 768px) {
 
-  #forecastList {
+  ul#forecastList {
     padding-top: 15px;
     margin-left: 130px
   }
