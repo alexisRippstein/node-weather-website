@@ -1,138 +1,372 @@
-// Fetching Data of Geo and forecast API
-weatherForm.addEventListener('submit', (e) => {
-	
-	//Defining Meassage Containers
-	const htmlLocation = document.getElementById('location');
+$(document).ready(function () {
+    function hideSubmitForm() {
+        $("#weatherForm").removeClass('show');
+    }
 
-	const forecastList = document.getElementById('forecastList');
+    function showubmitForm() {
+        $("#weatherForm").addClass('show');
+    }
 
-	const weatherMsg = document.getElementById('weatherMsg');
-	const spinner = document.getElementById('spinner');
-	const htmlError = document.getElementById('errorMsg');
+    showubmitForm();
 
-	const weatherForm = document.getElementById('weatherForm');
-	const search = document.getElementById('inputLocation');
+    // Fetching Data of Geo and forecast API
+    $("#weatherForm").submit(function (e) {
 
-	const weatherIconDaily = document.getElementById('weather-icon-result');
+        e.preventDefault();
 
-	e.preventDefault();
+        const search = $('#inputLocation').val();
+        const serchInput = search
 
-	const serchInput = search.value;
+        showSpinner();
 
-	showSpinner();
+        fetch('/weather?adress=' + serchInput).then((response) => {
 
-	htmlLocation.textContent = '';
-	forecastList.innerHTML = '';
-	// remove img ccontent
-	$('#weatherIconFigure').each(function() {
-		if ($(this).find('img').length) {
-		   weatherIconDaily.parentNode.removeChild(weatherIconDaily);
-		   figcaptionIcon.parentNode.removeChild(figcaptionIcon);
-		}
-	});
+            response.json().then((data) => {
 
-	hideWeatherMsg();
-	//hideSpinner();
-	//showErrorMsg();
+                if (data.error) {
 
-	fetch('/weather?adress=' + serchInput).then( (response) => {
-		
-		response.json().then( (data) => {
-				
-			if (data.error) {
+                    hideSpinner();
+                    showErrorMsg();
+                    $("#errorMsg").html(data.error);
 
-				// hideWeatherMsg();
-				hideSpinner();
-				showErrorMsg();
+                } else {
+                    hideErrorMsg();
+                    hideSubmitForm();
+                    hideSpinner();
 
-				htmlError.textContent = data.error;
+                    //Defining variables
+                    // Time
+                    var timeFormatet = data[0].forecast.today.timeFormatet.split(",");
+                    //locatioin
+                    var location = data[0].location;
+                    //shortCode
+                    var shortCode = data[0].shortCodeFormatted;
+                    //Temp
+                    var weatherTemp = data[0].forecast.today.temperature + ' ';
+                    var splitWeatherTemp = weatherTemp.split('.')
+                    //summary
+                    var weatherDesc = data[0].forecast.today.summaryFormatet
+                    //precipitation
+                    var precipitation = data[0].forecast.today.precipProbability
+                    //humidity
+                    var humidity = data[0].forecast.today.humidity
+                    //windspeed
+                    var windSpeed = data[0].forecast.today.windSpeed
+                    //Background Image
+                    var weahterBackgroundPath = '/img/weatherBackgrounds/';
+                    var weahterBackgroundSulfix = '.jpg';
+                    var weatherBackgroundNameToday = data[0].forecast.today.icon;
+                    var weatherBackgroundSrcToday = weahterBackgroundPath + weatherBackgroundNameToday + weahterBackgroundSulfix;
 
-			} else {
-				
-				hideErrorMsg();
-				hideSpinner();
-				showWeatherMsg();
+                    updateData();
+                    updateWeekDays();
+                    updateIcons();
+                    updateBackground();
+                    showWeatherWidget();
 
-				//Variables for Wheater Msg
-				const location = (data[0].location);
-				const forecast = (data[0].forecast);
+                    //Update Data for the first view
+                    function updateData() {
+                        //Time
+                        $('.date-dayname').html(timeFormatet[0]);
+                        $('.date-day').html(timeFormatet[1]);
+                        //locatioin
+                        $('.location').html(location + ',');
+                        //shortCode
+                        $('.shortCode').html(shortCode);
+                        //Temp
+                        $('#weatherTemp').html(splitWeatherTemp[0]);
+                        //summary
+                        $('.weather-desc').html(weatherDesc);
+                        //precipitation
+                        $('.precipitation .value').html(precipitation + ' %');
+                        //humidity
+                        $('.humidity .value').html(humidity + ' %');
+                        //windspeed
+                        $('.wind .value').html(windSpeed + ' km/h');
+                    };
 
-				const splitForecast = forecast.split(" – ");
-				
-				// Displays Location Msg
-				htmlLocation.textContent = location;
+                    function updateWeekDays() {
 
-				// Displays Details belong to the location
-				// for loop should run through spelling list array and create list items in "splitForecast"
-				var i;
-				for (i = 1; i < splitForecast.length; i++ ) {
-					var newLI = document.createElement("li"), // create a new li
-					splitForecastList = document.getElementById("forecastList"), // cache the unordered list
-					newContent = document.createTextNode(splitForecast[i]); // grab the splitForecast list item
-					
-					// add the splitForecast list item to the li
-					newLI.appendChild(newContent);
+                        $('.week-list li').removeClass('active');
+                        $('.week-list li:nth-child(1)').addClass('active');
 
-					splitForecastList.appendChild(newLI);
-				}
+                        //weekTemp + WeekDay Update
 
-				addWheathericon();
+                        var weatherTemp = data[0].forecast.today.temperature + ' ';
+                        var splitWeatherTemp = weatherTemp.split('.')
+                        $('.week-list li:nth-child(1) .day-temp').html(splitWeatherTemp[0] + '°C');
+                        var weekday = data[0].forecast.today.weekday;
+                        $(".week-list li:nth-child(1) .day-name").html(weekday);
 
-				htmlError.className = htmlError.className.replace("d-block", "d-none");
+                        var weatherTempTomorrow = data[0].forecast.tomorrow.temperatureTomorrow + ' ';
+                        var splitWeatherTempTomorrow = weatherTempTomorrow.split('.')
+                        $(".week-list li:nth-child(2) .day-temp").html(splitWeatherTempTomorrow[0] + '°C');
+                        var weekdayTomorrow = data[0].forecast.tomorrow.weekdayTomorrow;
+                        $(".week-list li:nth-child(2) .day-name").html(weekdayTomorrow);
 
-				function addWheathericon() {
+                        var weatherTempTomorrow2 = data[0].forecast.tomorrow2.temperatureTomorrow2 + ' ';
+                        var splitWeatherTempTomorrow2 = weatherTempTomorrow2.split('.')
+                        $(".week-list li:nth-child(3) .day-temp").html(splitWeatherTempTomorrow2[0] + '°C');
+                        var weekdayTomorrow2 = data[0].forecast.tomorrow2.weekdayTomorrow2;
+                        $(".week-list li:nth-child(3) .day-name").html(weekdayTomorrow2);
 
-					const weatherIconPath = '/img/weatherIcons/';
-					const weatherIconName = splitForecast[0];
-					const weatherIconSulfix = '.svg';
-					const weatherIconSrc = weatherIconPath + weatherIconName + weatherIconSulfix;
-					var image = document.createElement("img");
-					var caption = document.createElement("figcaption");
-					var imageParent = document.getElementById("weatherIconFigure");
-					image.className = "weather-icon-result";
-					image.id = "weather-icon-result";
-					caption.id = "figcaptionIcon";
-					image.src = weatherIconSrc
-					image.alt = weatherIconName 
-					caption.innerHTML = weatherIconName;   
-					imageParent.appendChild(image);
-					imageParent.appendChild(caption);
-				}
+                        var weatherTempTomorrow3 = data[0].forecast.tomorrow3.temperatureTomorrow3 + ' ';
+                        var splitWeatherTempTomorrow3 = weatherTempTomorrow3.split('.')
+                        $(".week-list li:nth-child(4) .day-temp").html(splitWeatherTempTomorrow3[0] + '°C');
+                        var weekdayTomorrow3 = data[0].forecast.tomorrow3.weekdayTomorrow3;
+                        $(".week-list li:nth-child(4) .day-name").html(weekdayTomorrow3);
 
-			};
-		});
-	});
+                    };
 
-	// Show & Hide functions
-	function showSpinner() {
-		spinner.className = "spinner-border d-inline-block";
-		setTimeout(() => {
-			spinner.className = spinner.className.replace("d-inline-block", "d-none");
-		}, 3000);
-	};
+                    function updateIcons() {
 
-	function hideSpinner() {
-		spinner.className = spinner.className.replace("d-inline-block", "d-none");
-	};
+                        // Add Icons
+                        var weatherIconPath = '/img/weatherIcons/';
+                        var weatherIconSulfix = '.svg';
 
-	function showErrorMsg() {
-		htmlError.className = "alert alert-danger col-md-6 offset-md-3 d-none";
-		htmlError.className = htmlError.className.replace("d-none", "d-block");
-	};
+                        var weatherIconNameToday = data[0].forecast.today.icon
+                        var weatherIconSrcToday = weatherIconPath + weatherIconNameToday + weatherIconSulfix;
+                        $('.weather-icon-today').attr('src', weatherIconSrcToday);
+                        $('.week-list li:nth-child(1) .day-icon').attr('src', weatherIconSrcToday);
 
-	function hideErrorMsg() {
-		htmlError.className= "alert alert-danger col-md-6 offset-md-3 d-block";
-		htmlError.className = htmlError.className.replace("d-block", "d-none");
-	};
+                        var weatherIconNameTomorrow = data[0].forecast.tomorrow.iconTomorrow
+                        var weatherIconSrcTomorrow = weatherIconPath + weatherIconNameTomorrow + weatherIconSulfix;
+                        $('.week-list li:nth-child(2) .day-icon').attr('src', weatherIconSrcTomorrow);
 
-	function showWeatherMsg() {
-		weatherMsg.className = "d-none m-auto";
-		weatherMsg.className = weatherMsg.className.replace("d-none", "d-inline-block");
-	};
 
-	function hideWeatherMsg() {
-		weatherMsg.className = "d-inline-block m-auto";
-		weatherMsg.className = weatherMsg.className.replace("d-inline-block", "d-none");
-	};
+                        var weatherIconNameTomorrow2 = data[0].forecast.tomorrow2.iconTomorrow2
+                        var weatherIconSrcTomorrow2 = weatherIconPath + weatherIconNameTomorrow2 + weatherIconSulfix;
+                        $('.week-list li:nth-child(3) .day-icon').attr('src', weatherIconSrcTomorrow2);
+
+
+                        var weatherIconNameTomorrow3 = data[0].forecast.tomorrow3.iconTomorrow3
+                        var weatherIconSrcTomorrow3 = weatherIconPath + weatherIconNameTomorrow3 + weatherIconSulfix;
+                        $('.week-list li:nth-child(4) .day-icon').attr('src', weatherIconSrcTomorrow3);
+                    };
+
+                    function updateBackground() {
+                        $('.weather-side').css("background-image", 'url(' + weatherBackgroundSrcToday + ')');
+                    };
+
+                    function updateIconDaily() {
+                        $('.weather-icon-today').attr('src', weatherIconSrcToday);
+                    };
+
+                    function updateDataTomorrow() {
+
+                        //Defining variables
+                        // Time
+                        timeFormatet = data[0].forecast.tomorrow.timeTomorrowFormatet.split(",");
+                        //DailyIcon
+                        weatherIconPath = '/img/weatherIcons/';
+                        weatherIconSulfix = '.svg';
+                        weatherIconNameToday = data[0].forecast.tomorrow.iconTomorrow
+                        weatherIconSrcToday = weatherIconPath + weatherIconNameToday + weatherIconSulfix;
+                        //Temp
+                        weatherTemp = data[0].forecast.tomorrow.temperatureTomorrow + ' ';
+                        splitWeatherTemp = weatherTemp.split('.')
+                        //summary
+                        weatherDesc = data[0].forecast.tomorrow.summaryTomorrowFormatet
+                        //precipitation
+                        precipitation = data[0].forecast.tomorrow.precipProbabilityTomorrow
+                        //humidity
+                        humidity = data[0].forecast.tomorrow.humidityTomorrow
+                        //windspeed
+                        windSpeed = data[0].forecast.tomorrow.windSpeedTomorrow
+                        //BackgroundImage
+                        weahterBackgroundPath = '/img/weatherBackgrounds/';
+                        weahterBackgroundSulfix = '.jpg';
+                        weatherBackgroundNameToday = data[0].forecast.tomorrow.iconTomorrow
+                        weatherBackgroundSrcToday = weahterBackgroundPath + weatherBackgroundNameToday + weahterBackgroundSulfix;
+
+                        updateData();
+                        updateIconDaily();
+                    };
+
+                    function updateDataTomorrow2() {
+
+                        //Defining variables
+                        // Time
+                        timeFormatet = data[0].forecast.tomorrow2.timeTomorrowFormatet2.split(",");
+                        //DailyIcon
+                        weatherIconPath = '/img/weatherIcons/';
+                        weatherIconSulfix = '.svg';
+                        weatherIconNameToday = data[0].forecast.tomorrow2.iconTomorrow2;
+                        weatherIconSrcToday = weatherIconPath + weatherIconNameToday + weatherIconSulfix;
+                        //Temp
+                        weatherTemp = data[0].forecast.tomorrow2.temperatureTomorrow2 + ' ';
+                        splitWeatherTemp = weatherTemp.split('.')
+                        //summary
+                        weatherDesc = data[0].forecast.tomorrow2.summaryTomorrowFormatet2;
+                        //precipitation
+                        precipitation = data[0].forecast.tomorrow2.precipProbabilityTomorrow2;
+                        //humidity
+                        humidity = data[0].forecast.tomorrow2.humidityTomorrow2;
+                        //windspeed
+                        windSpeed = data[0].forecast.tomorrow2.windSpeedTomorrow2;
+                        //BackgroundImage
+                        weahterBackgroundPath = '/img/weatherBackgrounds/';
+                        weahterBackgroundSulfix = '.jpg';
+                        weatherBackgroundNameToday = data[0].forecast.tomorrow2.iconTomorrow2;
+                        weatherBackgroundSrcToday = weahterBackgroundPath + weatherBackgroundNameToday + weahterBackgroundSulfix;
+
+                        updateData();
+                        updateIconDaily();
+                    };
+
+                    function updateDataTomorrow3() {
+
+                        //Defining variables
+                        // Time
+                        timeFormatet = data[0].forecast.tomorrow3.timeTomorrowFormatet3.split(",");
+                        //DailyIcon
+                        weatherIconPath = '/img/weatherIcons/';
+                        weatherIconSulfix = '.svg';
+                        weatherIconNameToday = data[0].forecast.tomorrow3.iconTomorrow3
+                        weatherIconSrcToday = weatherIconPath + weatherIconNameToday + weatherIconSulfix;
+                        //Temp
+                        weatherTemp = data[0].forecast.tomorrow3.temperatureTomorrow3 + ' ';
+                        splitWeatherTemp = weatherTemp.split('.')
+                        //summary
+                        weatherDesc = data[0].forecast.tomorrow3.summaryTomorrowFormatet3
+                        //precipitation
+                        precipitation = data[0].forecast.tomorrow3.precipProbabilityTomorrow3
+                        //humidity
+                        humidity = data[0].forecast.tomorrow3.humidityTomorrow3
+                        //windspeed
+                        windSpeed = data[0].forecast.tomorrow3.windSpeedTomorrow3
+                        //BackgroundImage
+                        weahterBackgroundPath = '/img/weatherBackgrounds/';
+                        weahterBackgroundSulfix = '.jpg';
+                        weatherBackgroundNameToday = data[0].forecast.tomorrow3.iconTomorrow3
+                        weatherBackgroundSrcToday = weahterBackgroundPath + weatherBackgroundNameToday + weahterBackgroundSulfix;
+
+                        updateData();
+                        updateIconDaily();
+                    };
+
+                    $('.week-list li:nth-child(1)').click(function () {
+                        $('.week-list li').removeClass('active');
+                        $(this).addClass('active');
+                        hideSideWidget();
+                        //Defining variables
+                        // Time
+                        timeFormatet = data[0].forecast.today.timeFormatet.split(",");
+                        // Add Icons
+                        weatherIconPath = '/img/weatherIcons/';
+                        weatherIconSulfix = '.svg';
+                        weatherIconNameToday = data[0].forecast.today.icon
+                        weatherIconSrcToday = weatherIconPath + weatherIconNameToday + weatherIconSulfix;
+
+                        //Temp
+                        weatherTemp = data[0].forecast.today.temperature + ' ';
+                        splitWeatherTemp = weatherTemp.split('.')
+                        //summary
+                        weatherDesc = data[0].forecast.today.summaryFormatet
+                        //precipitation
+                        precipitation = data[0].forecast.today.precipProbability
+                        //humidity
+                        humidity = data[0].forecast.today.humidity
+                        //windspeed
+                        windSpeed = data[0].forecast.today.windSpeed
+                        //BackgroundImage
+                        weahterBackgroundPath = '/img/weatherBackgrounds/';
+                        weahterBackgroundSulfix = '.jpg';
+                        weatherBackgroundNameToday = data[0].forecast.today.icon
+                        weatherBackgroundSrcToday = weahterBackgroundPath + weatherBackgroundNameToday + weahterBackgroundSulfix;
+
+                        setTimeout(function () {
+                            updateData();
+                            updateIconDaily();
+                            updateBackground();
+                            showSideWidget();
+                        }, 500);
+
+                    });
+
+                    $('.week-list li:nth-child(2)').click(function () {
+                        hideSideWidget();
+                        $('.week-list li').removeClass('active');
+                        $(this).addClass('active');
+                        hideSideWidget();
+
+                        setTimeout(function () {
+                            updateDataTomorrow();
+                            updateBackground();
+                            showSideWidget();
+                        }, 500);
+                    });
+
+
+                    $('.week-list li:nth-child(3)').click(function () {
+                        hideSideWidget();
+                        $('.week-list li').removeClass('active');
+                        $(this).addClass('active');
+                        setTimeout(function () {
+                            updateDataTomorrow2();
+                            updateBackground();
+                            showSideWidget();
+                        }, 500);
+                    });
+
+
+                    $('.week-list li:nth-child(4)').click(function () {
+                        hideSideWidget();
+                        $('.week-list li').removeClass('active');
+                        $(this).addClass('active');
+                        setTimeout(function () {
+                            updateDataTomorrow3();
+                            updateBackground();
+                            showSideWidget();
+                        }, 500);
+                    });
+
+                    $('.location-button').click(function () {
+                        showubmitForm();
+                        hideWeatherWidget();
+                    });
+
+                };
+            });
+
+            function hideWeatherWidget() {
+                hideSideWidget();
+                $('#wheaterWidget').removeClass('show');
+            }
+
+            function showWeatherWidget() {
+                showSideWidget();
+                $('#wheaterWidget').addClass('show');
+            }
+
+            function hideSideWidget() {
+                $('.weather-side').removeClass('show');
+            }
+
+            function showSideWidget() {
+                $('.weather-side').addClass('show');
+            }
+
+            function showErrorMsg() {
+                $("#errorMsg").removeClass('d-none');
+                $("#errorMsg").addClass('d-inline-block');
+            };
+
+            function hideErrorMsg() {
+                $("#errorMsg").removeClass('d-inline-block');
+                $("#errorMsg").addClass('d-none');
+            };
+        });
+
+        // Show loding icon
+        function showSpinner() {
+            $("#spinner").removeClass('d-none');
+            $("#spinner").addClass('d-inline-block');
+        };
+
+        function hideSpinner() {
+            $("#spinner").removeClass('d-inline-block');
+            $("#spinner").addClass('d-none');
+        };
+    });
 });
-

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 17.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="96px"
-	 height="96px" viewBox="0 0 96 96" enable-background="new 0 0 96 96" xml:space="preserve">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="96px" height="96px" viewBox="0 0 96 96" enable-background="new 0 0 96 96" xml:space="preserve">
 <g id="Base" display="none">
 </g>
 <g id="Dibujo">
-	<path d="M60,46c-5.514,0-10-4.486-10-10c0-1.104-0.896-2-2-2c-7.72,0-14,6.28-14,14s6.28,14,14,14c7.72,0,14-6.28,14-14
-		C62,46.896,61.104,46,60,46z M48,58c-5.514,0-10-4.486-10-10c0-4.888,3.525-8.969,8.168-9.832
-		c0.934,5.986,5.677,10.729,11.664,11.664C56.969,54.475,52.889,58,48,58z"/>
+	<path d="M85.659,41.723c-17.303,0-31.382-14.078-31.382-31.383c0-3.465-2.814-6.277-6.277-6.277
+		C23.771,4.063,4.063,23.772,4.063,48c0,24.229,19.708,43.937,43.937,43.937c24.23,0,43.937-19.707,43.937-43.937
+		C91.937,44.535,89.123,41.723,85.659,41.723z M48,79.384c-17.305,0-31.384-14.079-31.384-31.384
+		c0-15.341,11.063-28.147,25.634-30.856c2.931,18.786,17.819,33.67,36.606,36.606C76.147,68.319,63.343,79.384,48,79.384z"/>
 </g>
 </svg>

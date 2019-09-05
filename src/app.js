@@ -20,6 +20,8 @@ const publicDirPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
 const partialsPath = path.join(__dirname, '../templates/partials')
 
+//moment.js
+const moment = require('moment');
 
 // Setup handelbars engine and views location
 app.set('view engine', 'hbs')
@@ -68,24 +70,11 @@ app.get('/weather', (req, res) => {
 				return res.send({ error })
 			}
 			res.send([{
-				forecast: forecastData,
 				location: body.location,
-				adress: req.query.adress
+				shortCodeFormatted: body.shortCodeFormatted,
+				forecast: forecastData
 			}])
 		})
-	})
-})
-
-app.get('/products', (req, res) => {
-	
-	if (!req.query.search) {
-		return res.send({
-			error: 'Your musst provide a search query!'
-		})
-	}
-	console.log(req.query.search)
-	res.send({
-		products: []
 	})
 })
 
