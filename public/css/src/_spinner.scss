@@ -1,0 +1,13 @@
+/* Loading spinner 
+-------------------------------------------------- */
+
+div#spinner {
+    position: absolute;
+    color: $basecolor3;
+
+    &::before {
+        content: '';
+        background: transparent;
+        width: 100%;
+    }
+}

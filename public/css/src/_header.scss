@@ -1,0 +1,33 @@
+/* Header
+-------------------------------------------------- */
+.navbar-dark .navbar-brand {
+    color: $white;
+    text-align: center;
+    line-height: 16px;
+    transition: 0.5s color;
+
+    .navbarLogo {
+        margin-right: 8px;
+        float: left;
+        -webkit-filter: grayscale(0);
+        filter: grayscale(0);
+        transition: 0.2s filter;
+    }
+
+    span.small {
+        color: $grey;
+        font-size: 12px;
+        font-weight: 100;
+        display: block;
+        margin-top: 5px;
+    }
+
+    &:hover {
+        color: $grey;
+
+        .navbarLogo {
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+    }
+}

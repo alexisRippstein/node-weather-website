@@ -1,0 +1,46 @@
+/* ABOUT
+__________________________________________________ */
+
+.about {
+
+    &.starter-template {
+        text-align: center;
+        padding: 3rem 1.5rem;
+
+        @media (min-width: $screen-md) {
+            padding: 3rem 11.5rem
+        }
+    }
+
+    figure.aboutImg {
+        width: 200px;
+        margin: 0 auto;
+        margin-bottom: 30px;
+        
+        @media (min-width: $screen-xs) {
+            width: 180px;
+            float: left;
+        }
+    
+        figcaption {
+            margin-top: 10px;
+            color: $grey;
+        }
+    }
+
+    .lead {
+        @media (min-width: $screen-xs) {
+            padding-top: 40px;
+            text-align: left;
+            margin-left: 200px;
+        }
+
+        @media (min-width: $screen-sm) {
+            padding-top: 60px;
+        }
+	}
+}
+
+
+
+

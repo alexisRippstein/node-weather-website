@@ -1,0 +1,16 @@
+/* Footer 
+-------------------------------------------------- */
+
+.footer {
+	background-color: $footer-bg;
+	width: 100%;
+	text-align: center;
+	bottom: 0;
+	display: block;
+    position: fixed;
+    
+    > .container {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}

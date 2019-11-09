@@ -1,0 +1,278 @@
+/* Wheater widget
+__________________________________________________ */
+
+// Variables
+
+$wheaterWidgetColor1: $basecolor4;
+$wheaterWidgetColor2: $white;
+$wheaterWidgetColor3: $basecolor1;
+
+$box-shadow-color1: rgba(0, 0, 0, 0.2);
+$box-shadow-color2: rgba(0, 0, 0, 0.25);
+
+$screen-mobile-wheaterWidget: 659px;
+
+.containerWheater {
+	border-radius: 25px;
+	-webkit-box-shadow: 0 0 70px -10px $box-shadow-color1;
+			box-shadow: 0 0 70px -10px $box-shadow-color1;
+	background-color: $wheaterWidgetColor1;
+	color: $wheaterWidgetColor2;
+	height: 0;
+	max-width: 660px;
+	margin: 0 auto;
+	visibility: hidden;
+  	opacity: 0;
+	-webkit-transform:translateY(-100%);
+	-moz-transform:translateY(-100%);
+	transform:translateY(-300%);
+	-webkit-transition: opacity 0.5s, transform 1s ease-in-out;
+	-moz-transition: opacity 0.5s, transform 1s ease-in-out;
+	transition: opacity 0.5s, transform 1s ease-in-out;
+
+	&.show {
+		display: block;
+		opacity: 1;
+		height: 400px;
+		visibility: visible;
+		-webkit-transform:translateY(0px);
+		-moz-transform:translateY(0px);
+		transform:translateY(0px);
+		-webkit-transition: opacity 0.5s, transform 1s ease-in-out;
+		-moz-transition: opacity 0.5s, transform 1s ease-in-out;
+		transition: opacity 0.5s, transform 1s ease-in-out;
+
+		@media (max-width: $screen-mobile-wheaterWidget) {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 10000;
+		}
+	}
+
+	.weather-side {
+		position: relative;
+		height: 100%;
+		border-radius: 25px;
+		background-size: cover;
+		width: 300px;
+		-webkit-box-shadow: 0 0 20px -10px $box-shadow-color1;
+				box-shadow: 0 0 20px -10px $box-shadow-color1;
+		-webkit-transition: -webkit-transform 300ms ease, opacity .5s ease;
+		transition: -webkit-transform 300ms ease, opacity .5s ease;
+		-o-transition: transform 300ms ease, opacity .5s ease;
+		transition: transform 300ms ease, opacity .5s ease;
+		transition: transform 300ms ease, -webkit-transform 300ms ease, opacity .5s ease;
+		-webkit-transform: translateZ(0) scale(1.02) perspective(1000px);
+				transform: translateZ(0) scale(1.02) perspective(1000px);
+		float: left;
+		opacity: 0;
+
+		&.show {
+			opacity: 1;
+		}
+
+		&:hover {
+			-webkit-transform: scale(1.1) perspective(1500px) rotateY(10deg);
+					transform: scale(1.1) perspective(1500px) rotateY(10deg);
+		}
+
+		@media (max-width: $screen-mobile-wheaterWidget) {
+			width: 100%;
+			height: 58vh;
+
+			&:hover {
+				-webkit-transform: none;
+				transform: none;
+			}
+		}
+
+		.weather-gradient {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			background-image: $gradient;
+			border-radius: 25px;
+			opacity: 0.8;
+		}
+
+		.date-container {
+			position: absolute;
+			top: 25px;
+			left: 25px;
+
+			.date-dayname {
+				margin: 0;
+
+			}
+
+			.date-day {
+				display: block;
+			}
+
+			.location-icon {
+				display: inline-block;
+				height: 0.8em;
+				width: auto;
+				margin-right: 5px;
+			}
+			.location {
+				display: inline-block;
+				margin-top: 10px;
+				margin-right: 5px;
+			}
+			.shortCode {
+				text-transform: uppercase;
+			}
+		}
+
+		.weather-container {
+			position: absolute;
+			bottom: 25px;
+			left: 25px;
+
+			.weather-icon-today {
+				display: block;
+				height: 75px;
+				width: auto;
+				margin-left: -6px;
+				margin-bottom: -10px;
+				filter: brightness(0) invert(1);
+			}
+
+			.weather-temp,
+			.weather-temp-sign {
+				display: inline-block;
+				margin: 0;
+				font-weight: 700;
+				font-size: 4em;
+			}
+
+			.weather-desc {
+				margin: 0;
+			}			
+		}
+	}
+
+	.info-side {
+		position: relative;
+		float: left;
+		height: 100%;
+		padding-top: 25px;
+
+		@media (max-width: $screen-mobile-wheaterWidget) {
+			width: 100%;
+			height: auto;
+			background: $wheaterWidgetColor1;
+		}
+
+		.today-info {
+			padding: 15px;
+			margin: 0 25px 25px 25px;
+			border-radius: 10px;
+
+			> div:not(:last-child) {
+				margin: 0 0 10px 0;
+			}
+
+			> div .title {
+				float: left;
+				font-weight: 700;
+			}
+
+			> div .value {
+				float: right;
+			}
+		}
+
+		.week-container {
+
+			.week-list {
+				list-style-type: none;
+				padding: 0;
+				margin: 10px 35px;
+				-webkit-box-shadow: 0 0 50px -5px $box-shadow-color2;
+						box-shadow: 0 0 50px -5px $box-shadow-color2;
+				border-radius: 10px;
+
+				> li {
+					float: left;
+					padding: 15px;
+					cursor: pointer;
+					-webkit-transition: 200ms ease;
+					-o-transition: 200ms ease;
+					transition: 200ms ease;
+					border-radius: 10px;
+					border: 1px solid $wheaterWidgetColor2;
+					background: $wheaterWidgetColor3;
+					width: calc(100% /4);
+
+					&:hover {
+						-webkit-transform: scale(1.1);
+							-ms-transform: scale(1.1);
+								transform: scale(1.1);
+						background: $wheaterWidgetColor2;
+						color: $wheaterWidgetColor1;
+						-webkit-box-shadow: 0 0 40px -5px $box-shadow-color1;
+								box-shadow: 0 0 40px -5px $box-shadow-color1;
+					}
+
+					&.active {
+						background: $wheaterWidgetColor2;
+						color: $wheaterWidgetColor1;
+						border-radius: 10px;
+					}
+
+					&.active,
+					&:hover {
+						.day-icon {
+							filter: invert(13%) sepia(5%) saturate(2247%) hue-rotate(177deg) brightness(95%) contrast(92%);
+						}
+					}
+
+					.day-name {
+						display: block;
+						margin: 10px 0 0 0;
+						text-align: center;
+					}
+
+					.day-icon {
+						display: block;
+						height: 30px;
+						width: auto;
+						margin: 0 auto;
+						filter: brightness(0) invert(1);
+					}
+
+					.day-temp {
+						display: block;
+						text-align: center;
+						margin: 10px 0 0 0;
+						font-weight: 700;
+					}
+				}
+			}
+		}
+
+		.location-container {
+			padding: 25px 35px;
+
+			.location-button {
+
+				@extend .btn-base;
+				.map-pin {
+					height: 1em;
+					width: auto;
+					margin-right: 5px;
+					filter: brightness(0) invert(1);
+				}
+			}
+		}
+	}
+}
